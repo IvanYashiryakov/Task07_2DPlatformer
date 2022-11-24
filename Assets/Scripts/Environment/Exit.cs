@@ -5,9 +5,10 @@ using UnityEngine;
 public class Exit : MonoBehaviour
 {
     [SerializeField] private ExitText _template;
+    [SerializeField] private Coin[] _coins;
 
-    private const string _levelFinished = "Level complete!";
-    private const string _levelNotFinished = "Collect all coins";
+    private const string LevelFinished = "Level complete!";
+    private const string LevelNotFinished = "Collect all coins";
 
     private ExitText _text;
     private Vector3 _textPosition = new Vector3(0, 1.9f, 0);
@@ -23,15 +24,24 @@ public class Exit : MonoBehaviour
             _text = Instantiate(_template, transform);
             _text.transform.localPosition = _textPosition;
 
-            Coin[] coins = FindObjectsOfType<Coin>();
+            bool allCoinsCollected = true;
 
-            if (coins.Length > 0)
+            foreach (var coin in _coins)
             {
-                _text.GetComponent<TextMesh>().text = _levelNotFinished;
+                if (coin != null)
+                {
+                    allCoinsCollected = false;
+                    break;
+                }
+            }
+
+            if (allCoinsCollected)
+            {
+                _text.GetComponent<TextMesh>().text = LevelFinished;
             }
             else
             {
-                _text.GetComponent<TextMesh>().text = _levelFinished;
+                _text.GetComponent<TextMesh>().text = LevelNotFinished;
             }
         }
     }

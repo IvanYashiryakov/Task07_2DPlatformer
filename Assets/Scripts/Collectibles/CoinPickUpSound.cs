@@ -2,14 +2,10 @@ using UnityEngine;
 
 public class CoinPickUpSound : MonoBehaviour
 {
-    private float _destroyTime = 1f;
-    private float _lifeTime = 0f;
+    private float _lifeTime = 1f;
 
-    private void FixedUpdate()
+    private void Start()
     {
-        _lifeTime += Time.fixedDeltaTime;
-
-        if (_lifeTime > _destroyTime)
-            Destroy(gameObject);
+        Destroy(gameObject, _lifeTime);
     }
 }
